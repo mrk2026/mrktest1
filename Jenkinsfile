@@ -11,16 +11,19 @@ pipeline {
                 bat 'npm install'
             }
         }
-        stage('Install Browsers') {
+
+        stage('Install Playwright Browsers') {
             steps {
                 bat 'npx playwright install --with-deps'
             }
         }
+
         stage('Run Tests') {
             steps {
                 bat 'npx playwright test --headed'
             }
         }
+
         stage('Archive Report') {
             steps {
                 archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
@@ -30,7 +33,7 @@ pipeline {
 
     post {
         always {
-            junit 'test-results/**/*.xml'
+            echo 'Pipeline finished'
         }
     }
 }
