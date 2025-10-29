@@ -3,14 +3,12 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   timeout: 30000,
-  reporter: [
-    ['list'], // terminal output
-    ['html', { outputFolder: 'playwright-report', open: 'always' }] // HTML report
-  ],
+  reporter: [['html', { outputFolder: 'playwright-report', open: 'always' }]],
   use: {
-    headless: false,           // ⚡ Run tests with browser visible
+    headless: false, // run all tests headed by default
     viewport: { width: 1280, height: 720 },
+    ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure'
-  }
+    video: 'retain-on-failure',
+  },
 });
