@@ -8,10 +8,14 @@ test('Simple Example Page Test - Click Learn More', async ({ page }) => {
   const paragraph = page.locator('p').first();
   await expect(paragraph).toContainText('documentation examples');
 
+  // Wait longer for CI
   const learnMoreLink = page.locator('a', { hasText: 'More information...' });
-  await learnMoreLink.waitFor({ state: 'visible', timeout: 5000 });
+  await learnMoreLink.waitFor({ state: 'visible', timeout: 15000 });
   await learnMoreLink.click();
 
   await page.waitForLoadState('networkidle');
   await expect(page).toHaveURL(/iana\.org/);
+
+  // Optional screenshot for debugging
+  await page.screenshot({ path: 'example-ci.png', fullPage: true });
 });
