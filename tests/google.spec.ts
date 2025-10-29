@@ -1,27 +1,14 @@
-// tests/google.spec.ts
 import { test, expect } from '@playwright/test';
 
-test('Google Search Test', async ({ page }) => {
-  // Go to Google
-  await page.goto('https://www.google.com/');
+test('Simple Example Page Test', async ({ page }) => {
+  // Navigate to a test page
+  await page.goto('https://example.com');
 
-  // Accept cookies if the popup appears
-  const acceptButton = page.locator('text=I agree, Accept, Agree'); // text that might appear
-  if (await acceptButton.count() > 0) {
-    await acceptButton.click();
-  }
+  // Wait for the heading to be visible
+  const heading = page.locator('h1');
+  await expect(heading).toHaveText('Example Domain');
 
-  // Enter search query
-  await page.fill('input[name="q"]', 'Playwright testing');
-  await page.keyboard.press('Enter');
-
-  // Wait for results to load
-  const results = page.locator('div#search');
-
-  // Only check text if results exist
-  if (await results.count() > 0) {
-    await expect(results).toContainText('Playwright');
-  } else {
-    console.log('Results not found – possibly blocked by Google, skipping assertion.');
-  }
+  // Check that the paragraph contains the word "illustrative"
+  const paragraph = page.locator('p');
+  await expect(paragraph).toContainText('illustrative');
 });
